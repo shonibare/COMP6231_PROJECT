@@ -45,8 +45,9 @@ public class FrontEndServer {
 			System.out.println("CORBA Server ready and waiting ...");
 
 			// wait for invocations from clients
-
+			for(;;) {
 				orb.run();
+			}
 			
 		}
 		catch (Exception e) {

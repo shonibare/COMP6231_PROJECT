@@ -11,7 +11,8 @@ package EMSApp;
 public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl implements EMSApp.ServerInterface
 {
 
-  public String addEvent (String managerId, String eventId, String eventType, int capacity)
+  @Override
+public String addEvent (String managerId, String eventId, String eventType, int capacity)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -34,7 +35,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // addEvent
 
-  public String removeEvent (String managerId, String eventId, String eventType)
+  @Override
+public String removeEvent (String managerId, String eventId, String eventType)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -56,7 +58,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // removeEvent
 
-  public String listEventAvailability (String eventType)
+  @Override
+public String listEventAvailability (String eventType)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -76,7 +79,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // listEventAvailability
 
-  public String bookEvent (String customerId, String eventId, String eventType)
+  @Override
+public String bookEvent (String customerId, String eventId, String eventType)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -98,7 +102,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // bookEvent
 
-  public String cancelEvent (String customerId, String eventId, String evenType)
+  @Override
+public String cancelEvent (String customerId, String eventId, String evenType)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -120,7 +125,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // cancelEvent
 
-  public String getBookingSchedule (String customerId)
+  @Override
+public String getBookingSchedule (String customerId)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -140,7 +146,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // getBookingSchedule
 
-  public String swapEvent (String customerId, String newEventId, String newEventType, String oldEventId, String oldEventType)
+  @Override
+public String swapEvent (String customerId, String newEventId, String newEventType, String oldEventId, String oldEventType)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -164,7 +171,8 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
             }
   } // swapEvent
 
-  public void shutdown ()
+  @Override
+public void shutdown ()
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
@@ -186,9 +194,10 @@ public class _ServerInterfaceStub extends org.omg.CORBA.portable.ObjectImpl impl
   private static String[] __ids = {
     "IDL:EMSApp/ServerInterface:1.0"};
 
-  public String[] _ids ()
+  @Override
+public String[] _ids ()
   {
-    return (String[])__ids.clone ();
+    return __ids.clone ();
   }
 
   private void readObject (java.io.ObjectInputStream s) throws java.io.IOException
