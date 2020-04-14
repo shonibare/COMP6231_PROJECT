@@ -1,0 +1,18 @@
+module InterfaceApp {
+	
+	
+	interface ServerInterface{
+	
+		string addEvent(in string eventType, in string eventID, in long bookingCapacity);
+		string removeEvent(in string eventType, in string eventID);
+		string bookEvent(in string customerID , in string eventID, in string eventType);
+		string cancelEvent(in string customerID, in string eventID, in string eventType);
+		string getBookingSchedule(in string customerID);
+		string swapEvent(in string customerID, in string newEventID, in string newEventType, in string oldEventID, in string oldEventType);
+		string listEventAvailability(in string eventType); 
+		
+	};
+
+
+
+};
