@@ -17,7 +17,7 @@ import FrontEndApp.FrontEndInterfaceHelper;
 public class Client {
 
 	public static void main(String[] args) {
-
+		
 		try {
 			
 			ORB orb = ORB.init(args, null);
@@ -141,7 +141,7 @@ public class Client {
 				System.out.println("Enter Event Capacity");
 				int capacity = Integer.parseInt(scan.readLine());
 				if (capacity > 0) {
-					String res = she.addEvent(id.toUpperCase(), eventId.toUpperCase(), eventType, capacity);
+					String res = she.addEvent(eventId.toUpperCase(), eventType, capacity);
 					System.out.println(res);
 				} else {
 					System.out.println("Enter capacity value greater than 0");
@@ -154,7 +154,7 @@ public class Client {
 				String eventType = scan.readLine();
 				System.out.println("Enter Event ID");
 				String eventId = scan.readLine();
-				String res = she.removeEvent(id.toUpperCase(), eventId.toUpperCase(), eventType);
+				String res = she.removeEvent(eventId.toUpperCase(), eventType);
 				System.out.println(res);
 				break;
 			}

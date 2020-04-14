@@ -20,17 +20,20 @@ public final class ServerInterfaceHolder implements org.omg.CORBA.portable.Strea
     value = initialValue;
   }
 
-  public void _read (org.omg.CORBA.portable.InputStream i)
+  @Override
+public void _read (org.omg.CORBA.portable.InputStream i)
   {
     value = EMSApp.ServerInterfaceHelper.read (i);
   }
 
-  public void _write (org.omg.CORBA.portable.OutputStream o)
+  @Override
+public void _write (org.omg.CORBA.portable.OutputStream o)
   {
     EMSApp.ServerInterfaceHelper.write (o, value);
   }
 
-  public org.omg.CORBA.TypeCode _type ()
+  @Override
+public org.omg.CORBA.TypeCode _type ()
   {
     return EMSApp.ServerInterfaceHelper.type ();
   }

@@ -47,7 +47,7 @@ abstract public class ServerInterfaceHelper
 
   public static void write (org.omg.CORBA.portable.OutputStream ostream, EMSApp.ServerInterface value)
   {
-    ostream.write_Object ((org.omg.CORBA.Object) value);
+    ostream.write_Object (value);
   }
 
   public static EMSApp.ServerInterface narrow (org.omg.CORBA.Object obj)

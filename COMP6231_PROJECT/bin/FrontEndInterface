@@ -1,8 +1,8 @@
 module FrontEndApp
 {
 interface FrontEndInterface{
-	string addEvent(in string managerId, in string eventId, in string eventType, in long capacity);
-	string removeEvent(in string managerId, in string eventId, in string eventType);
+	string addEvent(in string eventId, in string eventType, in long capacity);
+	string removeEvent(in string eventId, in string eventType);
 	string listEventAvailability(in string eventType);
 	string bookEvent(in string customerId, in string eventId, in string eventType);
 	string cancelEvent(in string customerId, in string eventId, in string evenType);
