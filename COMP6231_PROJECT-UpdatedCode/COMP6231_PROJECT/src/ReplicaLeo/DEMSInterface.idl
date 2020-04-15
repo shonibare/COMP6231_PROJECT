@@ -1,0 +1,42 @@
+module DEMSBase
+{
+    const long LIST_SIZE = 2048;
+    
+    enum EventType
+    {
+        Conference,
+        TradeShow,
+        Seminar
+    };
+
+    struct Event
+    {
+        string ID;
+        EventType Type;
+        long Capacity;
+        long TotalBooked;
+    };
+
+    struct EventList
+    {
+        Event list[LIST_SIZE];
+        long total;
+    };
+
+    interface DEMS
+    {
+        // * Event Manager Functions * //
+        long AddEvent(in string eventID, in EventType eventType, in long eventCapacity, in string managerID);
+        long RemoveEvent(in string eventID, in EventType eventType, in string managerID);
+        EventList ListEventAvailability(in EventType eventType, in string managerID);
+
+        // * Customer Functions * //
+        long BookEvent(in string customerID, in string eventID, in EventType eventType);
+        EventList GetBookingSchedule(in string customerID);
+        long CancelEvent(in string customerID, in string eventID, in EventType eventType);
+        long SwapEvent (in string customerID, in string newEventID, in EventType newEventType, in string oldEventID, in EventType oldEventType);
+
+        // * Oneway shutdown * //
+        oneway void shutdown();
+    };
+};
