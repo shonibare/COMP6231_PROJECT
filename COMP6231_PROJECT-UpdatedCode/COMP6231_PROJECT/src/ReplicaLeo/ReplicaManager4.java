@@ -1,4 +1,5 @@
 import java.io.ByteArrayInputStream;
+import InterfaceApp.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
@@ -16,11 +17,13 @@ import org.omg.CosNaming.NamingContextExtHelper;
 
 import DEMSBase.DEMS;
 import DEMSBase.DEMSHelper;
+import DEMSBase.EventList;
 
-public class ReplicaManager1 {
+public class ReplicaManager4 {
 	
 	private static NamingContextExt ncRef;
 	private static Map<String,String> storage ;
+	
 	public static void main(String[] args) {
 		storage = new HashMap<String,String>();
 		
@@ -163,6 +166,7 @@ new Thread() {
 	private static String processsRequest(List request) {
 		
 		String result="";
+		
 		int no =  (int) request.get(0);
 		try {
 		if (no==1) {
@@ -175,26 +179,30 @@ new Thread() {
 			switch(func) {
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.addEvent(managerId, eventId, eventType, capacity);
+			    DEMS server = (DEMS)DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+                
+                result = server.addEvent(eventType, eventId, capacity, managerId);
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.addEvent(managerId, eventId, eventType, capacity);
+			//	
+				DEMS server = (DEMS)DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				
+				result = server.addEvent(eventType, eventId, capacity, managerId);
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.addEvent(managerId, eventId, eventType, capacity);
+			    DEMS server = (DEMS)DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+                
+                result = server.addEvent(eventType, eventId, capacity, managerId);
 				storage.put(seq, result);
 				break;
 			}
-			default: result = "Invalid result";
+			default: result = "Error";
 			}
 			
 		}else if(no==2){ 
@@ -206,32 +214,38 @@ new Thread() {
 			switch(func) {
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.removeEvent(managerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+				result = server.removeEvent(eventId, eventType, managerId);
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.removeEvent(managerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				result = server.removeEvent(eventId, eventType, managerId);
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.removeEvent(managerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				result = server.removeEvent(eventId, eventType, managerId);
 				storage.put(seq, result);
 				break;
 			}
-			default: result = "Invalid result";
+			default: result = "Error";
 			}
 		}else if(no==3){ 
 			String eventType = (String) request.get(1);
 			String seq = (String) request.get(2);
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.listEventAvailability(eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				EventList list = server.listEventAvailability(eventType, managerId);
+
+				for(int i = 0; i < list.total; i++)
+				{
+					result = result + " " + list.list[i].ID + " " + list.list[i].Capacity;
+				}
+
 				storage.put(seq, result);
 				
 		}else if(no==4){
@@ -243,22 +257,22 @@ new Thread() {
 			switch(func) {
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.bookEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+				result = server.bookEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.bookEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				result = server.bookEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.bookEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				result = server.bookEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
@@ -273,22 +287,22 @@ new Thread() {
 			switch(func) {
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.cancelEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+				result = server.cancelEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.cancelEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				result = server.cancelEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.cancelEvent(customerId, eventId, eventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				result = server.cancelEvent(customerId, eventId, eventType);
 				storage.put(seq, result);
 				break;
 			}
@@ -301,22 +315,40 @@ new Thread() {
 			switch(func) {
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.getBookingSchedule(customerId);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+				EventList list = server.getBookingSchedule(customerId);
+
+				for(int i = 0; i < list.total; i++)
+				{
+					result = result + " " + list.list[i].ID;
+				}
+
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.getBookingSchedule(customerId);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				EventList list = server.getBookingSchedule(customerId);
+
+				for(int i = 0; i < list.total; i++)
+				{
+					result = result + " " + list.list[i].ID;
+				}
+
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.getBookingSchedule(customerId);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				EventList list = server.getBookingSchedule(customerId);
+
+				for(int i = 0; i < list.total; i++)
+				{
+					result = result + " " + list.list[i].ID;
+				}
+
 				storage.put(seq, result);
 				break;
 			}
@@ -333,22 +365,22 @@ new Thread() {
 			switch(func) { 
 			case "MTL":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("MTL"));
-				result = con.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("MTL"));
+				result = server.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "QUE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("QUE"));
-				result = con.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("QUE"));
+				result = server.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
 				storage.put(seq, result);
 				break;
 			}
 			case "SHE":
 			{
-				ServerInterface con = ServerInterfaceHelper.narrow(ncRef.resolve_str("SHE"));
-				result = con.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
+				DEMS server = DEMSHelper.narrow(ncRef.resolve_str("SHE"));
+				result = server.swapEvent(customerId, newEventId, newEventType,oldEventId,oldEventType);
 				storage.put(seq, result);
 				break;
 			}

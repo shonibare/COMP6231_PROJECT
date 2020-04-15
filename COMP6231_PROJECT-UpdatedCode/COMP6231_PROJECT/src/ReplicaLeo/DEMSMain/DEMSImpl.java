@@ -78,7 +78,7 @@ public class DEMSImpl extends DEMSPOA
     @Override
     public int AddEvent (String eventID, EventType eventType, int eventCapacity, String managerID)
     {
-        int returnValue = 0;
+        int returnValue = -1;
 
         // Log entry
         _dateTime = LocalDateTime.now();
@@ -86,8 +86,8 @@ public class DEMSImpl extends DEMSPOA
                 "Logs/" + _ID + "/");
 
         // Check if request is sent by a manager
-        if (managerID.charAt(3) == 'M')
-        {
+        // if (managerID.charAt(3) == 'M')
+        // {
             // Make event object with parameters
             Event newEvent = new Event(eventID, eventType, eventCapacity, 0);
 
@@ -104,6 +104,7 @@ public class DEMSImpl extends DEMSPOA
                         EventUtil.MakeStringFromType(newEvent.Type)
                         + "; Capacity: " + newEvent.Capacity+"\n";
                 message2 = "Returning 0...\n\n";
+                returnValue = 0;
             }
             else
             {
@@ -121,14 +122,16 @@ public class DEMSImpl extends DEMSPOA
             _logger.LogMessage(message, _logFile, "Logs/" + _ID + "/");
             _logger.LogMessage(message2, _logFile, "Logs/" + _ID + "/");
             _logger.LogMessage("", _logFile, "Logs/" + _ID + "/");
-        }
-        else
-        {
+        // }
+        // else
+        // {
             // System.out.println("Permission denied! Not an Event Manager");
             // Log that it was unsuccessful
-            LogUnsuccessful();
-            returnValue = -1;
-        }
+            if(returnValue == -1)
+            {
+                LogUnsuccessful();
+            }
+        // }
 
         return returnValue;
     }
@@ -137,7 +140,7 @@ public class DEMSImpl extends DEMSPOA
     @Override
     public int RemoveEvent (String eventID, EventType eventType, String managerID)
     {
-        int returnValue = 0;
+        int returnValue = -1;
 
         // Log entry
         _dateTime = LocalDateTime.now();
@@ -145,8 +148,8 @@ public class DEMSImpl extends DEMSPOA
                 "Logs/" + _ID + "/");
 
         // Check if request is sent by a manager
-        if (managerID.charAt(3) == 'M')
-        {
+        // if (managerID.charAt(3) == 'M')
+        // {
             // Make event object with parameters
             Event newEvent = new Event(eventID, eventType, 0, 0);
 
@@ -175,19 +178,22 @@ public class DEMSImpl extends DEMSPOA
                 message = "Event removed successfully - ID:  " + oldEvent.ID + "; Type: " +
                             EventUtil.MakeStringFromType(oldEvent.Type)+"\n";
                 message2 = "Returning 0...\n\n";
+                returnValue = 0;
             }
 
             _logger.LogMessage(message, _logFile, "Logs/" + _ID + "/");
             _logger.LogMessage(message2, _logFile, "Logs/" + _ID + "/");
             _logger.LogMessage("", _logFile, "Logs/" + _ID + "/");
-        }
-        else
-        {
+        // }
+        // else
+        // {
             // System.out.println("Permission denied! Not an Event Manager");
             // Log that it was unsuccessful
-            LogUnsuccessful();
-            returnValue = -1;
-        }
+            if(returnValue == -1)
+            {
+                LogUnsuccessful();
+            }
+        // }
 
         return returnValue;
     }
